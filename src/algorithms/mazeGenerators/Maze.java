@@ -2,7 +2,7 @@ package algorithms.mazeGenerators;
 
 public class Maze {
     private int[][] grid;
-    private Position start;
+    private Position start ;
     private Position goal;
 
     public Maze(int rows, int columns) {
