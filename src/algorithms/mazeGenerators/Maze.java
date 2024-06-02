@@ -66,6 +66,7 @@ public class Maze {
         // if not, do nothing
         if(CheckValidEndStartPosition(G))
         {
+
             this.goal = G;
 //            this.grid[G.getRowIndex()][G.getColumnIndex()]=9;
         }
