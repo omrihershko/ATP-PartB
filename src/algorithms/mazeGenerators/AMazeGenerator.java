@@ -11,4 +11,5 @@ public abstract  class  AMazeGenerator  implements IMazeGenerator {
         long endTime = System.currentTimeMillis();
         return endTime - startTime;
     }
+
 }

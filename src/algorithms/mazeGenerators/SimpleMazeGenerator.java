@@ -10,12 +10,14 @@ public class SimpleMazeGenerator extends AMazeGenerator{
             throw new IllegalArgumentException("Maze dimensions are too small");
         // Create a new maze with the given dimensions
         Maze maze_simple = new Maze(rows, columns);
-        int max = Math.min(rows, columns);
-        // Set the start and goal positions
-        // Set the start position to be in the first row and a random column
-        // Set the goal position to be in a random row and the last column
-        maze_simple.setStartPosition(new Position(0, rand.nextInt(max) ));
-        maze_simple.setGoalPosition(new Position(rand.nextInt(max) ,columns-1));
+        for(int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < columns; j++)
+            {
+                // Set the value of the cell to random 1/0
+                maze_simple.setCell(i, j, rand.nextInt(2));
+            }
+        }
         return maze_simple;
     }
 }

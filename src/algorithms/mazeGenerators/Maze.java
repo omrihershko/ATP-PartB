@@ -1,12 +1,22 @@
 package algorithms.mazeGenerators;
 
+import java.util.Random;
+
 public class Maze {
     private int[][] grid;
     private Position start ;
     private Position goal;
 
-    public Maze(int rows, int columns) {
+    public Maze(int rows, int columns)
+    {
         grid = new int[rows][columns];
+        Random rand = new Random();
+        int max = Math.min(rows, columns);
+        // Set the start and goal positions
+        // Set the start position to be in the first row and a random column
+        // Set the goal position to be in a random row and the last column
+        this.setStartPosition(new Position(0, rand.nextInt(max) ));
+        this.setGoalPosition(new Position(rand.nextInt(max) ,columns-1));
     }
 
     public void setCell(int row, int col, int value)
@@ -31,7 +41,7 @@ public class Maze {
         if(CheckValidEndStartPosition(S))
         {
             this.start = S;
-            this.grid[S.getRowIndex()][S.getColumnIndex()]=2;
+//            this.grid[S.getRowIndex()][S.getColumnIndex()]=2;
         }
     }
 
@@ -47,7 +57,7 @@ public class Maze {
         if(CheckValidEndStartPosition(G))
         {
             this.goal = G;
-            this.grid[G.getRowIndex()][G.getColumnIndex()]=9;
+//            this.grid[G.getRowIndex()][G.getColumnIndex()]=9;
         }
     }
     private boolean CheckValidEndStartPosition(Position p)
