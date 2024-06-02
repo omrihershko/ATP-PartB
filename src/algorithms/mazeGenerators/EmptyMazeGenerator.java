@@ -2,14 +2,11 @@ package algorithms.mazeGenerators;
 
 public class EmptyMazeGenerator extends AMazeGenerator {
 
-
-
-//ADDED BY ME
-    // ADDED BY OMRI
-    // ARE YOU SEE IT ??
     @Override
     public Maze generate(int rows, int columns) {
-         Maze maze_simple = new Maze(0, 0);
+        if(rows < 1 || columns < 1)
+            throw new IllegalArgumentException("Maze dimensions are too small");
+         Maze maze_simple = new Maze(rows, columns);
         return maze_simple;
     }
 }
