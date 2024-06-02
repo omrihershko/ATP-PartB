@@ -49,8 +49,5 @@ public class SimpleMazeGenerator extends AMazeGenerator {
 
         return maze_simple;
         }
-
-
-
     }
 
