@@ -15,6 +15,14 @@ public class Position {
     public int getColumnIndex() {
         return column;
     }
+
+
+    public boolean SameAsOther(Position p) {
+        return (this.row == p.getRowIndex() && this.column == p.getColumnIndex());
+    }
+    public boolean SameAsOther(int row, int column) {
+        return (this.row == row && this.column == column);
+    }
     @Override
     public String toString() {
         return "{" + column + "," + row + "}";

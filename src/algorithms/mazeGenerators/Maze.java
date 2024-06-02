@@ -29,7 +29,17 @@ public class Maze {
             grid[row][col] = value;
         }
     }
-
+    public int getCell(int row, int col)
+    {
+        // check if the cell is inside the maze
+        // if it is, return the value of the cell
+        // if not, return -1
+        if(CheckValidCell(row, col))
+        {
+            return grid[row][col];
+        }
+        return -1;
+}
     public Position getStartPosition() {
         return this.start;
     }
