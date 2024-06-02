@@ -31,6 +31,21 @@ public class SimpleMazeGenerator extends AMazeGenerator {
         int Gj=maze_simple.getGoalPosition().getColumnIndex();
         // Move the start position to the goal position
 
+//moving horizontally until reaching the goal Row index
+        // Set the value of every cell to 0
+        while(Si!=Gi)
+        {
+            maze_simple.setCell(Si, Sj, 0);
+            Si = (Si < Gi) ? Si+1 : Si-1;
+        }
+        //and then moving vertically until reaching the goal Column index
+        // Set the value of every cell to 0
+        while(Sj!=Gj)
+        {
+            maze_simple.setCell(Si, Sj, 0);
+            Sj = (Sj < Gj) ? Sj+1 : Sj-1;
+        }
+        maze_simple.setCell(maze_simple.getGoalPosition().getRowIndex(), maze_simple.getGoalPosition().getColumnIndex(), 0);
 
         return maze_simple;
         }
