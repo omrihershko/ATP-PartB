@@ -16,8 +16,7 @@ public class Position {
         return column;
     }
 
-
-    public boolean SameAsOther(Position p) {
+       public boolean equals(Position p) {
         return (this.row == p.getRowIndex() && this.column == p.getColumnIndex());
     }
     public boolean SameAsOther(int row, int column) {
