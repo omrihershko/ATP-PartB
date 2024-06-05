@@ -153,5 +153,7 @@ public void MarkAsVisited(Position p)
     }
 
 
-
+    public int[][] getGrid() {
+        return grid;
+    }
 }
