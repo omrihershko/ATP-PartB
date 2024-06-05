@@ -2,7 +2,7 @@ package algorithms.search;
 
 import java.io.Serializable;
 
-public class AState  {
+public  abstract class AState  {
     private int cost;
     private AState parent;  // Renamed for clarity
 
