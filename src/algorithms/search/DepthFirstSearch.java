@@ -1,10 +1,14 @@
 package algorithms.search;
 
+import java.util.ArrayList;
+
 public class DepthFirstSearch extends  ASearchingAlgorithm{
 
     @Override
     public Solution solve(ISearchable searchable) {
-        return null;//to do
+
+
+        return null;
     }
 
     @Override
