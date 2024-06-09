@@ -1,56 +1,35 @@
 package algorithms.search;
 
+import algorithms.mazeGenerators.Position;
+
 public class MazeState extends AState{
 
-    private int row;
+   private Position current;
 
-    private int col;
-
-    private int cost;
-
-    private MazeState last_step;  // last_step state in the path
-
-
-    public MazeState(int row, int col) {
-        this.row = row;
-        this.col = col;
-        this.cost=0;
-        this.last_step = null;
-    }
-    public int getRow() {
-        return row;
+    public MazeState(Position my_position) {
+        current=my_position;
     }
 
-    public int getColumn() {
-        return col;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        MazeState mazeState = (MazeState) obj;
+        return current.getRowIndex() == mazeState.current.getRowIndex() &&
+                current.getColumnIndex() == mazeState.current.getColumnIndex();
     }
 
-    public int getCost() {
-        return cost;
+    public Position getCurrent() {
+        return current;
     }
 
-    public void setCost(int cost) {
-        this.cost = cost;
+    public void setCurrent(Position current) {
+        this.current = current;
     }
+    @Override
+    public String toString() {
+        return
+                "(" + current.getRowIndex() + ", " + current.getColumnIndex() + ")";
 
-    public MazeState getParent() {
-        return last_step;
-    }
-
-    public void last_step(MazeState parent) {
-        this.last_step = parent;
-    }
-
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public void setCol(int col) {
-        this.col = col;
-    }
-
-    public void setLast_step(MazeState last_step) {
-        this.last_step = last_step;
     }
 }

@@ -7,15 +7,7 @@ public  abstract class AState  {
     private boolean is_visited;
 
     public AState() {
-        this.parent = null;
-        this.cost = 0;
-        this.is_visited=false;
-    }
-
-    public AState(int cost, AState parent) {
-        this.cost = cost;
-        this.parent = parent;
-        this.is_visited=false;
+        this.is_visited = false;
 
     }
 
