@@ -7,6 +7,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
 
 
     public Solution solve(ISearchable searchable) {
+
         if (searchable == null) return null;
         Queue<AState> queue = new LinkedList<AState>();
 
