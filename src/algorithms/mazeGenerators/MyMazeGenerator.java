@@ -5,7 +5,6 @@ import java.util.Stack;
 
 public class MyMazeGenerator extends AMazeGenerator {
     private int[][] Visited;
-
     @Override
     public Maze generate(int rows, int columns) {
         //Create a new Maze
@@ -20,6 +19,18 @@ public class MyMazeGenerator extends AMazeGenerator {
         }
         //Generate the Maze Using the Iterative implementation of the Randomized DFS Algorithm
         generate_helper_iterative(maze);
+        maze.setCell(maze.getStartPosition().getRowIndex(),maze.getStartPosition().getColumnIndex(),0);
+        maze.setCell(maze.getGoalPosition().getRowIndex(),maze.getGoalPosition().getColumnIndex(),0);
+        //Set the Goal around walls
+        for (int[] dir : new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}})
+        {
+            int newRow = maze.getGoalPosition().getRowIndex() + dir[0];
+            int newCol = maze.getGoalPosition().getColumnIndex() + dir[1];
+            if (maze.CheckValidCell(newRow, newCol))
+            {
+                maze.setCell(newRow, newCol, 0);
+            }
+        }
         return maze;
     }
 
