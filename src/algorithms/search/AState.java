@@ -6,9 +6,9 @@ public  abstract class AState  {
 
     private boolean is_visited;
 
-    public AState() {
+    public AState()
+    {
         this.is_visited = false;
-
     }
 
     public int getCost() {
@@ -22,12 +22,14 @@ public  abstract class AState  {
     public AState getParent() {
         return parent;
     }
-
+    public void SetVisit(){
+        is_visited = true;
+    }
     public void setParent(AState parent) {
         this.parent = parent;
     }
 
-    public boolean isIs_visited() {
+    public boolean Is_visited() {
         return is_visited;
     }
 
