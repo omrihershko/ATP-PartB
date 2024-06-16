@@ -31,7 +31,9 @@ public class SearchableMaze implements ISearchable {
     }
 
 
-
+    public Maze getMaze() {
+        return maze;
+    }
 
     @Override
     public AState getStartState() {
@@ -51,7 +53,7 @@ public class SearchableMaze implements ISearchable {
         for (int[] d : directions) {
             int newRow = pos.getRowIndex() + d[0];
             int newCol = pos.getColumnIndex() + d[1];
-            if (maze.CheckValidCell(newRow, newCol)) {
+            if (maze.CheckValidCell(newRow, newCol) && maze.getGrid()[newCol][newRow]==0) {
                 neighbors.add(states[newRow][newCol]);
             }
         }
