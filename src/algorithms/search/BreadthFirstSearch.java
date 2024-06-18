@@ -2,16 +2,19 @@ package algorithms.search;
 
 import java.util.*;
 
-public class BreadthFirstSearch extends ASearchingAlgorithm {
+public class BreadthFirstSearch extends ASearchingAlgorithm
+{
+    Queue<AState> queue ;
 
-
+public BreadthFirstSearch()
+{
+    queue = new LinkedList<AState>();
+}
 
     public Solution solve(ISearchable searchable)
     {
 
         if (searchable == null) return null;
-        Queue<AState> queue = new LinkedList<AState>();
-
         AState startState = searchable.getStartState();
         AState goalState = searchable.getGoalState();
 
@@ -27,7 +30,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
             if (currentState.equals(goalState))
             {
                 Solution solution = reconstructPath(currentState);
-                this.setNumberOfNodesEvaluated(solution.getPath().size());
+                this.setNumberOfNodesEvaluated(solution.getPath().size()-1);
                 return solution;
             }
 
