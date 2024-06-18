@@ -19,7 +19,7 @@ public class DepthFirstSearch extends  ASearchingAlgorithm
            if(currentState.equals(searchable.getGoalState()))
            {
                Solution solution = reconstructPath(currentState);
-               this.setNumberOfNodesEvaluated(solution.getPath().size());
+               this.setNumberOfNodesEvaluated(solution.getPath().size()-1);
                return solution;
            }
            for(AState neighbor : searchable.getAllPossibleStates(currentState))

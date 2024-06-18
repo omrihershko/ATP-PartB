@@ -50,29 +50,41 @@ public Maze getMaze() {
         List<AState> neighbors = new ArrayList<>();
         MazeState state = (MazeState) s;
         Position pos = state.getCurrent();
-        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};// {-1, 1}, {-1, -1}, {1, 1}, {1, -1}}; // Including diagonals
+        int[][] directions = {{-1, 0}, {0, 1} ,{1, 0}, {0, -1} };// {-1, 1}, {-1, -1}, {1, 1}, {1, -1}}; // Including diagonals
         for (int[] d : directions)
         {
             int newRow = pos.getRowIndex() + d[0];
             int newCol = pos.getColumnIndex() + d[1];
             if (maze.CheckValidCell(newRow, newCol) && maze.getCell(newRow, newCol) == 0)
             {
+                states[newRow][newCol].setCost(10 + states[pos.getRowIndex()][pos.getColumnIndex()].getCost());
                 neighbors.add(states[newRow][newCol]);
+                //Diagonals:
 
-                //insert the diagonal neighbors
-                // Right Up
-//                if (maze.CheckValidCell(newRow-1, newCol+1) && maze.getGrid()[newRow-1][newCol+1]==0 && ((neighbors.contains(states[newRow - 1][newCol]) ||neighbors.contains(states[newRow - 1][newCol+1])) ))
-//                    neighbors.add(states[newRow-1][newCol + 1]);
-//                // Right Down
-//                if (maze.CheckValidCell(newRow+1, newCol+1) && maze.getGrid()[newRow+1][newCol+1]==0 && ((neighbors.contains(states[newRow + 1][newCol]) ||neighbors.contains(states[newRow ][newCol+1])) ))
-//                    neighbors.add(states[newRow+1][newCol + 1]);
-//                // Left Up
-//                if (maze.CheckValidCell(newRow-1, newCol-1) && maze.getGrid()[newRow-1][newCol-1]==0 && ((neighbors.contains(states[newRow - 1][newCol]) ||neighbors.contains(states[newRow ][newCol-1])) ))
-//                    neighbors.add(states[newRow-1][newCol - 1]);
-//                // Left Down
-//                if (maze.CheckValidCell(newRow+1, newCol-1) && maze.getGrid()[newRow+1][newCol-1]==0 && ((neighbors.contains(states[newRow + 1][newCol]) ||neighbors.contains(states[newRow][newCol-1])) ))
-//                    neighbors.add(states[newRow+1][newCol - 1]);
-
+                // Right Added , Check diagonals right up ------------------------------------------------------------------------------------------------------------------------------------------------------  Up Added - Check diagonals right up
+                if ((d[0] == 0 && d[1] == 1 && (maze.CheckValidCell(pos.getRowIndex() - 1, pos.getColumnIndex() + 1) && maze.getCell(pos.getRowIndex() - 1, pos.getColumnIndex() + 1) == 0)) || (d[0] == -1 && d[1] == 0 && (maze.CheckValidCell(pos.getRowIndex() - 1, pos.getColumnIndex() + 1) && maze.getCell(pos.getRowIndex() - 1, pos.getColumnIndex() - 1) == 0))) {
+                    //Add right up
+                    states[pos.getRowIndex() - 1][pos.getColumnIndex() + 1].setCost(15+ states[pos.getRowIndex()][pos.getColumnIndex()].getCost());
+                    neighbors.add(states[pos.getRowIndex() - 1][pos.getColumnIndex() + 1]);
+                }
+                //Right Added, Check diagonals right down ------------------------------------------------------------------------------------------------------------------------------------------------------  Down Added - Check diagonals right down
+                if ((d[0] == 0 && d[1] == 1 && (maze.CheckValidCell(pos.getRowIndex() + 1, pos.getColumnIndex() + 1) && maze.getCell(pos.getRowIndex() + 1, pos.getColumnIndex() + 1) == 0)) || (d[0] == 1 && d[1] == 0 && (maze.CheckValidCell(pos.getRowIndex() + 1, pos.getColumnIndex() + 1) && maze.getCell(pos.getRowIndex() + 1, pos.getColumnIndex() + 1) == 0))) {
+                    //Add right down
+                    states[pos.getRowIndex() + 1][pos.getColumnIndex() + 1].setCost(15+ states[pos.getRowIndex()][pos.getColumnIndex()].getCost());
+                    neighbors.add(states[pos.getRowIndex() + 1][pos.getColumnIndex() + 1]);
+                }
+                //Left Added , Check diagonals left down --------------------------------------------------------------------------------------------------------------------------------------------------------  Down Added - Check diagonals left down
+                if ((d[0] == 0 && d[1] == -1 && (maze.CheckValidCell(pos.getRowIndex() + 1, pos.getColumnIndex() - 1) && maze.getCell(pos.getRowIndex() + 1, pos.getColumnIndex() - 1) == 0)) || (d[0] == 1 && d[1] == 0 && (maze.CheckValidCell(pos.getRowIndex() + 1, pos.getColumnIndex() - 1) && maze.getCell(pos.getRowIndex() + 1, pos.getColumnIndex() - 1) == 0))) {
+                    //Add left down
+                    states[pos.getRowIndex() + 1][pos.getColumnIndex() - 1].setCost(15+ states[pos.getRowIndex()][pos.getColumnIndex()].getCost());
+                    neighbors.add(states[pos.getRowIndex() + 1][pos.getColumnIndex() - 1]);
+                }
+                //Left Added , Check diagonals left up ----------------------------------------------------------------------------------------------------------------------------------------------------------  Up Added - Check diagonals left up
+                if ((d[0] == 0 && d[1] == -1 && (maze.CheckValidCell(pos.getRowIndex() - 1, pos.getColumnIndex() - 1) && maze.getCell(pos.getRowIndex() - 1, pos.getColumnIndex() - 1) == 0)) || (d[0] == -1 && d[1] == 0 && (maze.CheckValidCell(pos.getRowIndex() - 1, pos.getColumnIndex() - 1) && maze.getCell(pos.getRowIndex() - 1, pos.getColumnIndex() - 1) == 0))) {
+                    //Add left up
+                    states[pos.getRowIndex() - 1][pos.getColumnIndex() - 1].setCost(15+ states[pos.getRowIndex()][pos.getColumnIndex()].getCost());
+                    neighbors.add(states[pos.getRowIndex() - 1][pos.getColumnIndex() - 1]);
+                }
             }
         }
         if(neighbors.size()==0)
