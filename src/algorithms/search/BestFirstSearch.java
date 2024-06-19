@@ -6,6 +6,7 @@ public class BestFirstSearch extends  BreadthFirstSearch{
 
 public BestFirstSearch()
 {
+    super();
     //Defining the queue as a priority queue with a comparator that compares the cost of the states
     queue = new PriorityQueue<AState>((a,b) -> (int)(a.getCost() - b.getCost()));
 }
