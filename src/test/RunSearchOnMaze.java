@@ -11,14 +11,14 @@ public class RunSearchOnMaze {
 
 
             IMazeGenerator mg = new MyMazeGenerator();
-            Maze maze = mg.generate(1000, 1000);
+            Maze maze = mg.generate(10, 10);
             SearchableMaze searchableMaze = new SearchableMaze(maze);
             searchableMaze.getMaze().print();
-            solveProblem(searchableMaze, new BreadthFirstSearch());
+//            solveProblem(searchableMaze, new BreadthFirstSearch());
             solveProblem(searchableMaze, new DepthFirstSearch());
 
 
-        solveProblem(searchableMaze, new BestFirstSearch());
+//          solveProblem(searchableMaze, new BestFirstSearch());
     }
 
     private static void solveProblem(ISearchable domain, ISearchingAlgorithm searcher) {
@@ -31,9 +31,9 @@ public class RunSearchOnMaze {
         System.out.println("the goal="+domain.getGoalState());
         System.out.println("Solution path:");
         ArrayList<AState> solutionPath = solution.getPath();
-        for (int i = solutionPath.size()-1; i >=0 ; i--)
+        for (int i = 0; i <solutionPath.size() ; i++)
         {
-            System.out.println(String.format("%d. %s", solutionPath.size()-i-1, solutionPath.get(i)));
+            System.out.println(String.format("%d. %s", i, solutionPath.get(i)));
         }
     }
 }

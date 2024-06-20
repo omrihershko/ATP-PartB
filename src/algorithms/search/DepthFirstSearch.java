@@ -20,6 +20,7 @@ public class DepthFirstSearch extends  ASearchingAlgorithm
            {
                Solution solution = reconstructPath(currentState);
                this.setNumberOfNodesEvaluated(solution.getPath().size()-1);
+               solution.reverse();//______________________________________________________________________________________ i add
                return solution;
            }
            for(AState neighbor : searchable.getAllPossibleStates(currentState))

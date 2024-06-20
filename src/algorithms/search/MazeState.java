@@ -29,7 +29,7 @@ public class MazeState extends AState{
     @Override
     public String toString() {
         return
-                "(" + current.getRowIndex() + ", " + current.getColumnIndex() + ")";
+                "{" + current.getColumnIndex() + "," + current.getRowIndex() +"}";
 
     }
 }
