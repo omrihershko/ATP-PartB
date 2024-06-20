@@ -31,6 +31,7 @@ public BreadthFirstSearch()
             {
                 Solution solution = reconstructPath(currentState);
                 this.setNumberOfNodesEvaluated(solution.getPath().size()-1);
+                solution.reverse();//______________________________________________________________________________________ i add the
                 return solution;
             }
 
@@ -44,6 +45,7 @@ public BreadthFirstSearch()
                 }
             }
         }
+
 
         return null;  // Return null if no solution is found
     }
