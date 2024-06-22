@@ -24,13 +24,14 @@ public BreadthFirstSearch()
 
         while (!queue.isEmpty())
         {
+            this.numberOfNodesEvaluated++;
             AState currentState = queue.poll();
 
             // If the current state is the goal state, reconstruct the path from start to goal
             if (currentState.equals(goalState))
             {
                 Solution solution = reconstructPath(currentState);
-                this.setNumberOfNodesEvaluated(solution.getPath().size()-1);
+//                this.setNumberOfNodesEvaluated(solution.getPath().size()-1);
                 solution.reverse();//______________________________________________________________________________________ i add the
                 searchable.restartMaze();
                 return solution;

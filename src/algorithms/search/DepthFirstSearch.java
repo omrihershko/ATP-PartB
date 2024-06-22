@@ -14,12 +14,13 @@ public class DepthFirstSearch extends  ASearchingAlgorithm
         stack.push(searchable.getStartState());
         while(!stack.isEmpty())
         {
+            this.numberOfNodesEvaluated++;
            AState currentState = stack.pop();
            currentState.SetVisit();
            if(currentState.equals(searchable.getGoalState()))
            {
                Solution solution = reconstructPath(currentState);
-               this.setNumberOfNodesEvaluated(solution.getPath().size()-1);
+//               this.setNumberOfNodesEvaluated(solution.getPath().size()-1);
                solution.reverse();//______________________________________________________________________________________ i add
                searchable.restartMaze();
                return solution;
@@ -29,6 +30,7 @@ public class DepthFirstSearch extends  ASearchingAlgorithm
                for (AState neighbor : neighbors) {
                    if (!neighbor.Is_visited()) {
                        neighbor.setParent(currentState);
+//                       this.numberOfNodesEvaluated++;
                        stack.push(neighbor);
                        neighbor.SetVisit();
                    }

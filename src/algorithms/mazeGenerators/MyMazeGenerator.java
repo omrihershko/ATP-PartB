@@ -31,6 +31,20 @@ public class MyMazeGenerator extends AMazeGenerator {
                 maze.setCell(newRow, newCol, 0);
             }
         }
+        double randomValue = Math.random();
+
+        for(int i=0;i<rows;i++)
+        {
+            for(int j=0;j<columns;j++)
+            {
+                randomValue = Math.random();
+                if(randomValue<0.3)
+                {
+                    maze.setCell(i,j,0);
+                }
+
+            }
+        }
         return maze;
     }
 
