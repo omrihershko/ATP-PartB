@@ -7,6 +7,10 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * The SearchableMaze class implements the ISearchable interface.
+ * This class adapts a Maze object to be used in search algorithms.
+ */
 
 public class SearchableMaze implements ISearchable {
     Maze maze;
@@ -15,7 +19,12 @@ public class SearchableMaze implements ISearchable {
 
     AState [][] states;
 
-
+    /**
+     * Constructs a SearchableMaze object from a given Maze.
+     * Initializes the states for each position in the maze.
+     *
+     * @param maze the Maze object to be adapted
+     */
     public SearchableMaze(Maze maze) {
         this.maze = maze;
         states = new AState[maze.getRows()][maze.getColumns()];
@@ -29,23 +38,42 @@ public class SearchableMaze implements ISearchable {
         startState=new MazeState(maze.getStartPosition());
         goalState=new MazeState(maze.getGoalPosition());
     }
-
+    /**
+     * Returns the Maze object.
+     *
+     * @return the Maze object
+     */
 public Maze getMaze() {
     return maze;
 }
 
-
+    /**
+     * Returns the start state of the maze.
+     *
+     * @return the start state
+     */
     @Override
     public AState getStartState() {
         return startState;
     }
 
+    /**
+     * Returns the goal state of the maze.
+     *
+     * @return the goal state
+     */
     @Override
     public AState getGoalState() {
         return goalState;
     }
 
 
+    /**
+     * Returns a list of all possible states that can be reached from the given state.
+     *
+     * @param s the current state
+     * @return a list of all possible states from the given state, or null if there are no possible states
+     */
     public List<AState> getAllPossibleStates(AState s)
     {
         List<AState> neighbors = new ArrayList<>();
@@ -165,7 +193,9 @@ public Maze getMaze() {
         }
         return neighbors;
     }
-
+    /**
+     * Restarts the maze, resetting all states to their initial values.
+     */
     public void restartMaze()
     {
         for (int i = 0; i < maze.getRows(); i++) {
