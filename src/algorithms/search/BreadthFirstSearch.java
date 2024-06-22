@@ -32,21 +32,25 @@ public BreadthFirstSearch()
                 Solution solution = reconstructPath(currentState);
                 this.setNumberOfNodesEvaluated(solution.getPath().size()-1);
                 solution.reverse();//______________________________________________________________________________________ i add the
+                searchable.restartMaze();
                 return solution;
             }
 
-            // Explore adjacent states
-            for (AState neighbor : searchable.getAllPossibleStates(currentState))
-            {
-                if (!visited.contains(neighbor)) {
-                    neighbor.setParent(currentState);  // Set the current state as the parent for path reconstruction
-                    queue.add(neighbor);
-                    visited.add(neighbor);
+            List<AState> neighbors = searchable.getAllPossibleStates(currentState);
+            if(neighbors != null) {
+                // Explore adjacent states
+                for (AState neighbor : searchable.getAllPossibleStates(currentState)) {
+                    if (!visited.contains(neighbor)) {
+                        neighbor.setParent(currentState);  // Set the current state as the parent for path reconstruction
+                        queue.add(neighbor);
+                        visited.add(neighbor);
+                    }
                 }
             }
+
         }
 
-
+        searchable.restartMaze();
         return null;  // Return null if no solution is found
     }
 

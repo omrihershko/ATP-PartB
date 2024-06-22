@@ -7,4 +7,5 @@ public interface ISearchable {
     AState getStartState();
     AState getGoalState();
     List<AState> getAllPossibleStates(AState s);
+    public void restartMaze();
 }

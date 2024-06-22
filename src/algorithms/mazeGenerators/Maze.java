@@ -146,10 +146,19 @@ public void MarkAsVisited(Position p)
 
         for (int row = 0; row < grid.length; row++) {
             for (int col = 0; col < grid[row].length; col++) {
-                System.out.print(grid[row][col] + " ");
+                if (row == start.getRowIndex() && col == start.getColumnIndex())
+                    System.out.print("S ");
+                else if (row == goal.getRowIndex() && col == goal.getColumnIndex())
+                    System.out.print("E ");
+                else {
+                    System.out.print(grid[row][col] + " ");
+                }
+
             }
             System.out.println();
         }
-    }
+
+        }
+
 
 }

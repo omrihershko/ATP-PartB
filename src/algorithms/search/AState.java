@@ -32,6 +32,11 @@ public  abstract class AState  {
     public boolean Is_visited() {
         return is_visited;
     }
+    public void restartState() {
+        parent = null;
+        is_visited = false;
+    }
+
 
     // Override equals and hashCode if necessary, based on specific use case
 }
