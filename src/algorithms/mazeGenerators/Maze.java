@@ -2,10 +2,24 @@ package algorithms.mazeGenerators;
 
 import java.util.Random;
 
+/**
+ * The Maze class represents a maze with a grid of cells.
+ * Each cell can have a value, and the maze has a start and goal position.
+ */
 public class Maze {
     private int[][] grid;
     private Position start ;
     private Position goal;
+
+    /**
+     * Constructs a Maze object with the specified number of rows and columns.
+     * Initializes the grid and randomly sets the start and goal positions on the edges of the maze.
+     *
+     * @param rows the number of rows in the maze
+     * @param columns the number of columns in the maze
+     */
+
+
 
     public Maze(int rows, int columns)
     {
@@ -62,6 +76,14 @@ public class Maze {
         }
     }
 
+    /**
+     * Sets the value of the cell at the specified row and column.
+     * If the cell is not inside the maze, does nothing.
+     *
+     * @param row the row index of the cell
+     * @param col the column index of the cell
+     * @param value the value to set in the cell
+     */
     public void setCell(int row, int col, int value)
     {
         // check if the cell is inside the maze
@@ -72,6 +94,14 @@ public class Maze {
             grid[row][col] = value;
         }
     }
+    /**
+     * Returns the value of the cell at the specified row and column.
+     * If the cell is not inside the maze, returns -1.
+     *
+     * @param row the row index of the cell
+     * @param col the column index of the cell
+     * @return the value of the cell, or -1 if the cell is not valid
+     */
     public int getCell(int row, int col)
     {
         // check if the cell is inside the maze
@@ -83,21 +113,47 @@ public class Maze {
         }
         return -1;
 }
+    /**
+     * Returns the number of rows in the maze.
+     *
+     * @return the number of rows
+     */
     public int getRows()
     {
     return grid.length;
     }
+    /**
+     * Returns the number of columns in the maze.
+     *
+     * @return the number of columns
+     */
     public int getColumns()
     {
         return grid[0].length;
     }
+    /**
+     * Returns the start position of the maze.
+     *
+     * @return the start position
+     */
     public Position getStartPosition() {
         return this.start;
     }
+    /**
+     * Marks the specified position as visited by setting its cell value to 0.
+     *
+     * @param p the position to mark as visited
+     */
 public void MarkAsVisited(Position p)
 {
     setCell(p.getRowIndex(),p.getColumnIndex(),0);
 }
+    /**
+     * Sets the start position of the maze.
+     * The position must be on the edges of the maze.
+     *
+     * @param S the start position
+     */
     public void setStartPosition(Position S) {
         // check if the position is on the edges of the maze
         // if it is, set the start position
@@ -108,11 +164,21 @@ public void MarkAsVisited(Position p)
 //            this.grid[S.getRowIndex()][S.getColumnIndex()]=2;
         }
     }
+    /**
+     * Returns the goal position of the maze.
+     *
+     * @return the goal position
+     */
     public Position getGoalPosition() {
 
         return goal;
     }
-
+    /**
+     * Sets the goal position of the maze.
+     * The position must be on the edges of the maze.
+     *
+     * @param G the goal position
+     */
     public void setGoalPosition(Position G) {
         // check if the position is on the edges of the maze
         // if it is, set the goal position
@@ -123,6 +189,13 @@ public void MarkAsVisited(Position p)
 //            this.grid[G.getRowIndex()][G.getColumnIndex()]=9;
         }
     }
+
+    /**
+     * Checks if the specified position is on the edges of the maze.
+     *
+     * @param p the position to check
+     * @return true if the position is valid, false otherwise
+     */
     public boolean CheckValidEndStartPosition(Position p)
     {
         // check if the position is on the edges of the maze
@@ -132,6 +205,13 @@ public void MarkAsVisited(Position p)
             return true;
         return false;
     }
+    /**
+     * Checks if the specified cell is inside the maze.
+     *
+     * @param row the row index of the cell
+     * @param col the column index of the cell
+     * @return true if the cell is valid, false otherwise
+     */
     public boolean CheckValidCell(int row, int col)
     {
         // check if the cell is inside the maze
@@ -141,6 +221,10 @@ public void MarkAsVisited(Position p)
             return true;
         return false;
     }
+    /**
+     * Prints the maze to the console.
+     * The start position is marked with 'S' and the goal position is marked with 'E'.
+     */
     public void print() {
         // print the maze
 
@@ -160,5 +244,12 @@ public void MarkAsVisited(Position p)
 
         }
 
-
+    /**
+     * Returns the grid of the maze.
+     *
+     * @return the grid
+     */
+    public int[][] getGrid() {
+        return grid;
+    }
 }

@@ -3,8 +3,21 @@ package algorithms.mazeGenerators;
 import java.util.Random;
 import java.util.Stack;
 
+/**
+ * The MyMazeGenerator class extends the AMazeGenerator class.
+ * This class provides an implementation of the generate method using
+ * the iterative version of the Randomized Depth-First Search (DFS) algorithm to create a maze.
+ */
 public class MyMazeGenerator extends AMazeGenerator {
     private int[][] Visited;
+    /**
+     * Generates a maze with the specified number of rows and columns.
+     * Uses the iterative implementation of the Randomized DFS algorithm.
+     *
+     * @param rows the number of rows in the maze
+     * @param columns the number of columns in the maze
+     * @return a Maze object representing the generated maze
+     */
     @Override
     public Maze generate(int rows, int columns) {
         //Create a new Maze
@@ -34,6 +47,11 @@ public class MyMazeGenerator extends AMazeGenerator {
         return maze;
     }
 
+    /**
+     * Helper method to generate the maze using an iterative implementation of the Randomized DFS algorithm.
+     *
+     * @param M the Maze object to be generated
+     */
     private void generate_helper_iterative(Maze M)
     {
         //Get the Start and Goal Positions
@@ -73,7 +91,13 @@ public class MyMazeGenerator extends AMazeGenerator {
            }
         }
     }
-
+    /**
+     * Removes the wall between two positions in the maze.
+     *
+     * @param P1 the first position
+     * @param P2 the second position
+     * @param M the Maze object
+     */
     private void RemoveWall(Position P1,Position P2,Maze M)
     {
         //Remove the Wall between the two Positions
@@ -84,6 +108,14 @@ public class MyMazeGenerator extends AMazeGenerator {
         int col = (P1.getColumnIndex()+P2.getColumnIndex())/2;
         M.setCell(row,col,0);
     }
+
+    /**
+     * Gets a random unvisited neighbor of a given position in the maze.
+     *
+     * @param P the current position
+     * @param M the Maze object
+     * @return a Position object representing a random unvisited neighbor, or null if no such neighbor exists
+     */
     private Position getRandomNeighbor(Position P ,Maze M)
     {
         //                   Right ,Left ,Down , Up
