@@ -29,7 +29,7 @@ public class SearchableMaze implements ISearchable {
         this.maze = maze;
         states = new AState[maze.getRows()][maze.getColumns()];
         for(int i=0;i<maze.getRows();i++){
-            for(int j=0;j<maze.getRows();j++){
+            for(int j=0;j<maze.getColumns();j++){
                 AState state=new MazeState(new Position(i,j));
                 states[i][j]=state;
             }
