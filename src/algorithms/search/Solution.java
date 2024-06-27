@@ -19,7 +19,7 @@ public class Solution {
     }
 
 
-    public ArrayList<AState> getPath() {
+    public ArrayList<AState> getSolutionPath() {
         return new ArrayList<>(path);  // Return a copy of the path to avoid external modifications
     }
 
