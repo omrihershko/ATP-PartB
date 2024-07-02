@@ -43,7 +43,7 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
             solution.add_State(current);
             current = current.getParent();
         }
-        Collections.reverse(solution.getPath());  // Reverse the path to start from the initial state
+        Collections.reverse(solution.getSolutionPath());  // Reverse the path to start from the initial state
         return solution;
     }
 }

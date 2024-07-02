@@ -27,7 +27,7 @@ class BestFirstSearchTest {
         assertNotNull(solution, "Solution should not be null");
 
         // Validate the solution path
-        ArrayList<AState> path = solution.getPath();
+        ArrayList<AState> path = solution.getSolutionPath();
         assertFalse(path.isEmpty(), "Solution path should not be empty");
 
         // Ensure the solution starts at the maze's start position
@@ -68,7 +68,7 @@ class BestFirstSearchTest {
         assertNotNull(solution, "Solution should not be null");
 
         // Validate the solution path
-        ArrayList<AState> path = solution.getPath();
+        ArrayList<AState> path = solution.getSolutionPath();
         assertFalse(path.isEmpty(), "Solution path should not be empty");
 
         // Ensure the solution starts at the maze's start position
