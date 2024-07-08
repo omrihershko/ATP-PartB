@@ -1,12 +1,13 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * The Maze class represents a maze with a grid of cells.
  * Each cell can have a value, and the maze has a start and goal position.
  */
-public class Maze {
+public class Maze implements Serializable {
     private int[][] grid;
     private Position start ;
     private Position goal;
@@ -251,5 +252,70 @@ public void MarkAsVisited(Position p)
      */
     public int[][] getGrid() {
         return grid;
+    }
+
+    //TODO: Add a toByteArray() function
+    //TODO: Add a constructor that accepts a byte array
+    //TODO: Add a function that converts an integer to a byte array
+    //TODO: Add a function that converts a byte array to an integer
+
+    //Constructor that accepts a byte array
+
+    public byte[] toByteArray() {
+        // The first 12 bytes are the maze details (rows, columns, start position, goal position)
+        //2 bytes for rows, 2 bytes for columns, 2 bytes for start row position , 2 bytes for start column position, 2 bytes for goal row position, 2 bytes for goal column position
+        //total 12 bytes
+        byte[] byte_maze = new byte[this.getRows() * this.getColumns() + 12];
+        // Convert the maze details to bytes
+        //starts with the rows size
+        byte[] byte_rows = Int_2_Byte(this.getRows());
+        byte_maze[0] = byte_rows[0];
+        byte_maze[1] = byte_rows[1];
+
+        //then the columns size
+        byte[] byte_columns = Int_2_Byte(this.getColumns());
+        byte_maze[2] = byte_columns[0];
+        byte_maze[3] = byte_columns[1];
+
+        //then the start position
+        byte[] byte_start_row = Int_2_Byte(this.getStartPosition().getRowIndex());
+        byte_maze[4] = byte_start_row[0];
+        byte_maze[5] = byte_start_row[1];
+
+        //then the start column position
+        byte[] byte_start_col = Int_2_Byte(this.getStartPosition().getColumnIndex());
+        byte_maze[6] = byte_start_col[0];
+        byte_maze[7] = byte_start_col[1];
+
+        //then the goal position
+        byte[] byte_goal_row = Int_2_Byte(this.getGoalPosition().getRowIndex());
+        byte_maze[8] = byte_goal_row[0];
+        byte_maze[9] = byte_goal_row[1];
+
+        //then the goal column position
+        byte[] byte_goal_col = Int_2_Byte(this.getGoalPosition().getColumnIndex());
+        byte_maze[10] = byte_goal_col[0];
+        byte_maze[11] = byte_goal_col[1];
+
+        // Convert the maze cells to bytes
+        for (int i = 0; i < this.getRows(); i++) {
+            for (int j = 0; j < this.getColumns(); j++) {
+                byte_maze[12 + i * this.getColumns() + j] = (byte)this.getCell(i, j);
+            }
+        }
+        // Return the byte array we built
+        return byte_maze;
+    }
+
+    public byte[] Int_2_Byte(int num_to_convert) {
+        // Convert an integer to a byte array
+        // The byte array will have 2 elements
+        // The first element will be the left side -  most significant byte
+        // The second element will be the right side - the least significant byte
+        return new byte[]{(byte)((num_to_convert >> 8) & 0xFF) , (byte)(num_to_convert & 0xFF)};
+    }
+
+    public int Byte_2_Int(byte[] bytes) {
+        return ((bytes[0] & 0xFF) << 8) | (bytes[1] & 0xFF);
     }
 }
