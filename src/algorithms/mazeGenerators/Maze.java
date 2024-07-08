@@ -1,6 +1,7 @@
 package algorithms.mazeGenerators;
 
 import java.io.Serializable;
+import java.nio.ByteBuffer;
 import java.util.Random;
 
 /**
@@ -11,6 +12,8 @@ public class Maze implements Serializable {
     private int[][] grid;
     private Position start ;
     private Position goal;
+    int rows;
+    int columns;
 
     /**
      * Constructs a Maze object with the specified number of rows and columns.
@@ -24,6 +27,8 @@ public class Maze implements Serializable {
 
     public Maze(int rows, int columns)
     {
+        this.rows = rows;
+        this.columns = columns;
         grid = new int[rows][columns];
         Random rand = new Random();
         int max = Math.min(rows, columns);
@@ -261,50 +266,42 @@ public void MarkAsVisited(Position p)
 
     //Constructor that accepts a byte array
 
+
+    public Maze(byte[] mazeInBytes) {
+        ByteBuffer buffer_a = ByteBuffer.wrap(mazeInBytes, 0, 4);
+        ByteBuffer buffer_b = ByteBuffer.wrap(mazeInBytes, 4, 8);
+        rows = buffer_a.getInt();
+        columns = buffer_b.getInt();
+        buffer_a = ByteBuffer.wrap(mazeInBytes, 8, 12);
+        buffer_b = ByteBuffer.wrap(mazeInBytes, 12, 16);
+        this.start = new Position(buffer_a.getInt(),buffer_b.getInt());
+        buffer_a = ByteBuffer.wrap(mazeInBytes, 16, 20);
+        buffer_b = ByteBuffer.wrap(mazeInBytes, 20, 24);
+        this.goal = new Position(buffer_a.getInt(),buffer_b.getInt());
+        int index = 24;
+        grid = new int[rows][columns];
+        for (int i = 0; i <rows ; i++) {
+            for (int j = 0; j < columns; j++) {
+                grid[i][j] = mazeInBytes[index++];
+            }
+
+        }
+    }
     public byte[] toByteArray() {
-        // The first 12 bytes are the maze details (rows, columns, start position, goal position)
-        //2 bytes for rows, 2 bytes for columns, 2 bytes for start row position , 2 bytes for start column position, 2 bytes for goal row position, 2 bytes for goal column position
-        //total 12 bytes
-        byte[] byte_maze = new byte[this.getRows() * this.getColumns() + 12];
-        // Convert the maze details to bytes
-        //starts with the rows size
-        byte[] byte_rows = Int_2_Byte(this.getRows());
-        byte_maze[0] = byte_rows[0];
-        byte_maze[1] = byte_rows[1];
-
-        //then the columns size
-        byte[] byte_columns = Int_2_Byte(this.getColumns());
-        byte_maze[2] = byte_columns[0];
-        byte_maze[3] = byte_columns[1];
-
-        //then the start position
-        byte[] byte_start_row = Int_2_Byte(this.getStartPosition().getRowIndex());
-        byte_maze[4] = byte_start_row[0];
-        byte_maze[5] = byte_start_row[1];
-
-        //then the start column position
-        byte[] byte_start_col = Int_2_Byte(this.getStartPosition().getColumnIndex());
-        byte_maze[6] = byte_start_col[0];
-        byte_maze[7] = byte_start_col[1];
-
-        //then the goal position
-        byte[] byte_goal_row = Int_2_Byte(this.getGoalPosition().getRowIndex());
-        byte_maze[8] = byte_goal_row[0];
-        byte_maze[9] = byte_goal_row[1];
-
-        //then the goal column position
-        byte[] byte_goal_col = Int_2_Byte(this.getGoalPosition().getColumnIndex());
-        byte_maze[10] = byte_goal_col[0];
-        byte_maze[11] = byte_goal_col[1];
-
-        // Convert the maze cells to bytes
-        for (int i = 0; i < this.getRows(); i++) {
-            for (int j = 0; j < this.getColumns(); j++) {
-                byte_maze[12 + i * this.getColumns() + j] = (byte)this.getCell(i, j);
+        int bufferSize = 4 + 4 + 4 + 4 + 4 + 4 + (rows * columns); // Size of int in bytes is 4
+        ByteBuffer byteBuffer = ByteBuffer.allocate(bufferSize);
+        byteBuffer.putInt(start.getRowIndex());
+        byteBuffer.putInt(start.getColumnIndex());
+        byteBuffer.putInt(goal.getRowIndex());
+        byteBuffer.putInt(goal.getColumnIndex());
+        byteBuffer.putInt(rows);
+        byteBuffer.putInt(columns);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                byteBuffer.put((byte)grid[i][j]);
             }
         }
-        // Return the byte array we built
-        return byte_maze;
+        return byteBuffer.array();
     }
 
     public byte[] Int_2_Byte(int num_to_convert) {
