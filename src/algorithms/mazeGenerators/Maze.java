@@ -269,15 +269,16 @@ public void MarkAsVisited(Position p)
 
     public Maze(byte[] mazeInBytes) {
         ByteBuffer buffer_a = ByteBuffer.wrap(mazeInBytes, 0, 4);
-        ByteBuffer buffer_b = ByteBuffer.wrap(mazeInBytes, 4, 8);
+        ByteBuffer buffer_b = ByteBuffer.wrap(mazeInBytes, 4, 4);
+        start = new Position(buffer_a.getInt(),buffer_b.getInt());
+        buffer_a = ByteBuffer.wrap(mazeInBytes, 8, 4);
+        buffer_b = ByteBuffer.wrap(mazeInBytes, 12, 4);
+        goal = new Position(buffer_a.getInt(),buffer_b.getInt());
+
+        buffer_a = ByteBuffer.wrap(mazeInBytes, 16, 4);
+        buffer_b = ByteBuffer.wrap(mazeInBytes, 20, 4);
         rows = buffer_a.getInt();
         columns = buffer_b.getInt();
-        buffer_a = ByteBuffer.wrap(mazeInBytes, 8, 12);
-        buffer_b = ByteBuffer.wrap(mazeInBytes, 12, 16);
-        this.start = new Position(buffer_a.getInt(),buffer_b.getInt());
-        buffer_a = ByteBuffer.wrap(mazeInBytes, 16, 20);
-        buffer_b = ByteBuffer.wrap(mazeInBytes, 20, 24);
-        this.goal = new Position(buffer_a.getInt(),buffer_b.getInt());
         int index = 24;
         grid = new int[rows][columns];
         for (int i = 0; i <rows ; i++) {
