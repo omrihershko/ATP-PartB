@@ -2,12 +2,13 @@ package Server;
 
 import IO.MyCompressorOutputStream;
 import algorithms.mazeGenerators.*;
+import algorithms.search.Solution;
 
 import java.io.*;
+import java.util.HashMap;
 
 
 public class ServerStrategyGenerateMaze implements IServerStrategy {
-
 
     @Override
     public void ServerStrategy(InputStream inFromClient, OutputStream outToClient) {
@@ -17,19 +18,25 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
 
             int [] maze_date=(int []) fromClient.readObject();
 
-            Maze maze=new Maze(maze_date[0],maze_date[1]);
+            int rows = maze_date[0];
+            int columns = maze_date[1];
 
-            MyCompressorOutputStream myCompressorOutputStream=new MyCompressorOutputStream(toClient);
+            AMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(rows, columns);
 
-            myCompressorOutputStream.write(maze.toByteArray());
+            ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
 
+            MyCompressorOutputStream compressor = new MyCompressorOutputStream(byteOutStream);
+
+            compressor.write(maze.toByteArray());
+            compressor.flush();
+            compressor.close();
+
+            byte[] compressedMaze = byteOutStream.toByteArray();
+            toClient.writeObject(compressedMaze);
             toClient.flush();
-
-            myCompressorOutputStream.close();
-
-            toClient.close();
-
             fromClient.close();
+            toClient.close();
 
 
         }catch (Exception e){

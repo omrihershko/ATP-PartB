@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
 
@@ -19,27 +20,40 @@ public class Server {
         this.port = port;
         this.listeningIntervalMS = listeningIntervalMS;
         this.strategy = strategy;
+        this.threadPool = Executors.newCachedThreadPool();
     }
 
-    public void start(){
-        try {
-            ServerSocket serverSocket = new ServerSocket(port);
-            while (!stop) {
-                try {
-                    Socket clientSocket = serverSocket.accept();
-
+    public void start() {
+        new Thread(() -> {
+            try {
+                ServerSocket serverSocket = new ServerSocket(port);
+                serverSocket.setSoTimeout(listeningIntervalMS);
+                while (!stop) {
                     try {
-                        strategy.ServerStrategy(clientSocket.getInputStream(), clientSocket.getOutputStream());
-                        clientSocket.close();
-                    } catch (IOException e){
-                        e.printStackTrace();
+                        Socket clientSocket = serverSocket.accept();
+                        threadPool.execute(() -> handleClient(clientSocket));
+                    } catch (SocketTimeoutException e) {
                     }
-                } catch (SocketTimeoutException e){
                 }
+                serverSocket.close();
+                threadPool.shutdown();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }).start();
+    }
+
+    private void handleClient(Socket clientSocket) {
+        try {
+            strategy.ServerStrategy(clientSocket.getInputStream(), clientSocket.getOutputStream());
+            clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void stop(){
+        stop = true;
     }
 
 
