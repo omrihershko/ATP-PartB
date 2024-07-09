@@ -12,8 +12,8 @@ public class Maze implements Serializable {
     private int[][] grid;
     private Position start ;
     private Position goal;
-    int rows;
-    int columns;
+    private int rows;
+    private int columns;
 
     /**
      * Constructs a Maze object with the specified number of rows and columns.
@@ -266,36 +266,29 @@ public void MarkAsVisited(Position p)
 
     //Constructor that accepts a byte array
 
-    public Maze(byte[] mazeInBytes)
-    {
-        byte[] start_row = new byte[]{mazeInBytes[0],mazeInBytes[1],mazeInBytes[2],mazeInBytes[3]};
-        byte[] start_col = new byte[]{mazeInBytes[4],mazeInBytes[5],mazeInBytes[6],mazeInBytes[7]};
-        byte[] goal_row = new byte[]{mazeInBytes[8],mazeInBytes[9],mazeInBytes[10],mazeInBytes[11]};
-        byte[] goal_col = new byte[]{mazeInBytes[12],mazeInBytes[13],mazeInBytes[14],mazeInBytes[15]};
-        this.start = new Position(ByteBuffer.wrap(start_row).getInt(),ByteBuffer.wrap(start_col).getInt());
-        this.goal = new Position(ByteBuffer.wrap(goal_row).getInt(),ByteBuffer.wrap(goal_col).getInt());
-        byte[] rows = new byte[]{mazeInBytes[16],mazeInBytes[17],mazeInBytes[18],mazeInBytes[19]};
-        byte[] columns = new byte[]{mazeInBytes[20],mazeInBytes[21],mazeInBytes[22],mazeInBytes[23]};
-        this.rows = ByteBuffer.wrap(rows).getInt();
-        this.columns = ByteBuffer.wrap(columns).getInt();
-        this.grid = new int[this.rows][this.columns];
+    public Maze(byte[] mazeInBytes) {
+        ByteBuffer buffer_a = ByteBuffer.wrap(mazeInBytes, 0, 4);
+        ByteBuffer buffer_b = ByteBuffer.wrap(mazeInBytes, 4, 4);
+        start = new Position(buffer_a.getInt(),buffer_b.getInt());
+        buffer_a = ByteBuffer.wrap(mazeInBytes, 8, 4);
+        buffer_b = ByteBuffer.wrap(mazeInBytes, 12, 4);
+        goal = new Position(buffer_a.getInt(),buffer_b.getInt());
+
+        buffer_a = ByteBuffer.wrap(mazeInBytes, 16, 4);
+        buffer_b = ByteBuffer.wrap(mazeInBytes, 20, 4);
+        rows = buffer_a.getInt();
+        columns = buffer_b.getInt();
         int index = 24;
-        for (int i = 0; i < this.rows; i++) {
-            for (int j = 0; j < this.columns; j++) {
-                this.grid[i][j] = mazeInBytes[index];
-                index++;
+        grid = new int[rows][columns];
+        for (int i = 0; i <rows ; i++) {
+            for (int j = 0; j < columns; j++) {
+                grid[i][j] = mazeInBytes[index++];
             }
+
         }
-
     }
-
-
-    //Convert the maze to a byte array
-    //The byte array will have the following structure:
-    // 4 bytes for the number of rows , 4 bytes for the number of columns , 4 bytes for the start row index , 4 bytes for the start column index
-    //and all the rest of the bytes will be the grid values
     public byte[] toByteArray() {
-        int bufferSize = 24 + (rows * columns); // Size of int in bytes is 4
+        int bufferSize = 4 + 4 + 4 + 4 + 4 + 4 + (rows * columns); // Size of int in bytes is 4
         ByteBuffer byteBuffer = ByteBuffer.allocate(bufferSize);
         byteBuffer.putInt(start.getRowIndex());
         byteBuffer.putInt(start.getColumnIndex());
@@ -310,4 +303,6 @@ public void MarkAsVisited(Position p)
         }
         return byteBuffer.array();
     }
-}
+
+    }
+
