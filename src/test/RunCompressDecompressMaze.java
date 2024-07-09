@@ -12,37 +12,42 @@ import java.io.*;
 import java.util.Arrays;
 
 public class RunCompressDecompressMaze {
-    public static void main(String[] args) {
-        String mazeFileName = "Maze.maze";
-        AMazeGenerator mazeGenerator = new MyMazeGenerator();
-        Maze maze = mazeGenerator.generate(10, 10); //Generate new maze
-        maze.print();
-        System.out.println();
-        try {
-            // save maze to a file
-            OutputStream out = new SimpleCompressorOutputStream(new FileOutputStream(mazeFileName));
+    public static void main(String[] args)
+    {
+        for (int i = 0; i < 10; i++) {
+            String mazeFileName = "Maze.maze";
+            AMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(10, 10); //Generate new maze
+            maze.print();
+            System.out.println();
+            try {
+                // save maze to a file
+                OutputStream out = new SimpleCompressorOutputStream(new FileOutputStream(mazeFileName));
 //            OutputStream out = new MyCompressorOutputStream(System.out);
-            out.write(maze.toByteArray());
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        byte savedMazeBytes[] = new byte[0];
-        try {
-            //read maze from file
+                out.write(maze.toByteArray());
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            byte savedMazeBytes[] = new byte[0];
+            try {
+                //read maze from file
 //          InputStream in = new MyDecompressorInputStream(new FileInputStream(mazeFileName));
-            InputStream in = new SimpleDecompressorInputStream(new FileInputStream(mazeFileName));
-            savedMazeBytes = new byte[maze.toByteArray().length];
-            in.read(savedMazeBytes);
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+                InputStream in = new SimpleDecompressorInputStream(new FileInputStream(mazeFileName));
+                savedMazeBytes = new byte[maze.toByteArray().length];
+                in.read(savedMazeBytes);
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Maze loadedMaze = new Maze(savedMazeBytes);
+            loadedMaze.print();
+            boolean areMazesEquals = Arrays.equals(loadedMaze.toByteArray(),maze.toByteArray());
+            System.out.println(String.format("Mazes equal: %s",areMazesEquals));
+            //maze should be equal to loadedMaze
         }
-        Maze loadedMaze = new Maze(savedMazeBytes);
-        loadedMaze.print();
-        boolean areMazesEquals = Arrays.equals(loadedMaze.toByteArray(),maze.toByteArray());
-        System.out.println(String.format("Mazes equal: %s",areMazesEquals));
-        //maze should be equal to loadedMaze
+
     }
 }
