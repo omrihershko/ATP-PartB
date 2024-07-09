@@ -28,6 +28,7 @@ public class SimpleDecompressorInputStream extends InputStream {
             int input = read();
             bytes[i] = (byte) input;
         }
+
         int curr_val = 0;
         int how_many = read();
         int index = 24;
