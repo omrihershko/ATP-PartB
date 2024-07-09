@@ -33,7 +33,6 @@ public class MyCompressorOutputStream extends OutputStream {
                 continue;
             }
             //if the byte is 1, insert its index into the stream
-
             if(b==1)
             {
                 write(i-count_for_256*256);
