@@ -27,7 +27,7 @@ public class RunCommunicateWithServers {
         solveSearchProblemServer.start();
 
         // Communicating with servers
-        CommunicateWithServer_MazeGenerating();
+//        CommunicateWithServer_MazeGenerating();
         CommunicateWithServer_SolveSearchProblem();
 
         // Stopping servers
@@ -45,7 +45,7 @@ public class RunCommunicateWithServers {
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         toServer.flush();
 
-                        int[] mazeDimensions = new int[]{50, 50};
+                        int[] mazeDimensions = new int[]{10, 10};
                         toServer.writeObject(mazeDimensions); // send maze dimensions to server
                         toServer.flush();
 
@@ -55,7 +55,7 @@ public class RunCommunicateWithServers {
                         is.read(decompressedMaze); // Fill decompressedMaze with bytes
 
                         Maze maze = new Maze(decompressedMaze);
-                        maze.print();
+//                        maze.print();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -78,7 +78,7 @@ public class RunCommunicateWithServers {
                         toServer.flush();
 
                         MyMazeGenerator mg = new MyMazeGenerator();
-                        Maze maze = mg.generate(50, 50);
+                        Maze maze = mg.generate(10, 10);
                         maze.print();
                         toServer.writeObject(maze); // send maze to server
                         toServer.flush();

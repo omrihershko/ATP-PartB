@@ -18,6 +18,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             String mazeHash = String.valueOf(maze.hashCode());
             String tempDirectoryPath = System.getProperty("java.io.tmpdir");
             Path solutionFilePath = Paths.get(tempDirectoryPath, mazeHash);
+            System.out.println(solutionFilePath);
             Solution solution;
 
             if (Files.exists(solutionFilePath)) {
