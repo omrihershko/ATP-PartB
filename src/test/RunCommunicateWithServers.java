@@ -51,7 +51,7 @@ public class RunCommunicateWithServers {
 
                         byte[] compressedMaze = (byte[]) fromServer.readObject(); // read generated maze (compressed with MyCompressor) from server
                         InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
-                        byte[] decompressedMaze = new byte[10000]; // allocating byte[] for the decompressed maze
+                        byte[] decompressedMaze = new byte[1000]; // allocating byte[] for the decompressed maze
                         is.read(decompressedMaze); // Fill decompressedMaze with bytes
 
                         Maze maze = new Maze(decompressedMaze);
@@ -84,7 +84,7 @@ public class RunCommunicateWithServers {
                         toServer.flush();
 
                         Solution mazeSolution = (Solution) fromServer.readObject(); // read generated maze (compressed with MyCompressor) from server
-                        System.out.println("Solution steps: " + mazeSolution);
+                        System.out.println("Solution steps: " );
 
                         // Print Maze Solution retrieved from the server
                         ArrayList<AState> mazeSolutionSteps = mazeSolution.getSolutionPath();

@@ -10,9 +10,12 @@ import java.util.HashMap;
 
 public class ServerStrategyGenerateMaze implements IServerStrategy {
 
+    Configurations configurations;
     @Override
     public void ServerStrategy(InputStream inFromClient, OutputStream outToClient) {
         try {
+            configurations = Configurations.getInstance();
+
             ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
 
@@ -21,7 +24,7 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
             int rows = maze_date[0];
             int columns = maze_date[1];
 
-            AMazeGenerator mazeGenerator = new MyMazeGenerator();
+            IMazeGenerator mazeGenerator = configurations.getMazeGeneratingAlgorithm();
             Maze maze = mazeGenerator.generate(rows, columns);
 
             ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();

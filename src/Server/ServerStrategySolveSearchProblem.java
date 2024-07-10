@@ -8,9 +8,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class ServerStrategySolveSearchProblem implements IServerStrategy {
+    Configurations configurations;
     @Override
     public void ServerStrategy(InputStream inFromClient, OutputStream outToClient) {
+
         try {
+            configurations = Configurations.getInstance();
             ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
 
@@ -27,7 +30,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
                 }
             } else {
                 SearchableMaze searchableMaze = new SearchableMaze(maze);
-                ISearchingAlgorithm searcher = new BreadthFirstSearch();
+                ISearchingAlgorithm searcher = configurations.getMazeSearchingAlgorithm();
                 solution = searcher.solve(searchableMaze);
 
                 try (ObjectOutputStream solutionWriter = new ObjectOutputStream(new FileOutputStream(solutionFilePath.toFile()))) {
