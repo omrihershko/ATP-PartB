@@ -14,13 +14,15 @@ public class Server {
     private IServerStrategy strategy;
     private volatile boolean stop;
     private ExecutorService threadPool;
+    public Configurations configurations;
 
 
-    public Server(int port, int listeningIntervalMS, IServerStrategy strategy) {
+    public Server(int port, int listeningIntervalMS, IServerStrategy strategy) throws IOException {
+        this.configurations=Configurations.getInstance();
         this.port = port;
         this.listeningIntervalMS = listeningIntervalMS;
         this.strategy = strategy;
-        this.threadPool = Executors.newCachedThreadPool();
+        this.threadPool = Executors.newFixedThreadPool(configurations.getThreadPoolSize());
     }
 
     public void start() {
