@@ -305,12 +305,13 @@ public void MarkAsVisited(Position p)
                 byteBuffer.put((byte)grid[i][j]);
             }
         }
+
         return byteBuffer.array();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(start, goal, rows, columns)*31 + Arrays.hashCode(grid);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(start, goal, rows, columns)*31 + Arrays.hashCode(grid);
+//    }
     }
 
