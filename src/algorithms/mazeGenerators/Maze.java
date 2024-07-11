@@ -2,6 +2,8 @@ package algorithms.mazeGenerators;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -233,7 +235,8 @@ public void MarkAsVisited(Position p)
      */
     public void print() {
         // print the maze
-
+//        System.out.println("Start: "+ start);
+//        System.out.println("Goal: "+ goal);
         for (int row = 0; row < grid.length; row++) {
             for (int col = 0; col < grid[row].length; col++) {
                 if (row == start.getRowIndex() && col == start.getColumnIndex())
@@ -270,6 +273,7 @@ public void MarkAsVisited(Position p)
         ByteBuffer buffer_a = ByteBuffer.wrap(mazeInBytes, 0, 4);
         ByteBuffer buffer_b = ByteBuffer.wrap(mazeInBytes, 4, 4);
         start = new Position(buffer_a.getInt(),buffer_b.getInt());
+
         buffer_a = ByteBuffer.wrap(mazeInBytes, 8, 4);
         buffer_b = ByteBuffer.wrap(mazeInBytes, 12, 4);
         goal = new Position(buffer_a.getInt(),buffer_b.getInt());
@@ -278,6 +282,7 @@ public void MarkAsVisited(Position p)
         buffer_b = ByteBuffer.wrap(mazeInBytes, 20, 4);
         rows = buffer_a.getInt();
         columns = buffer_b.getInt();
+
         int index = 24;
         grid = new int[rows][columns];
         for (int i = 0; i <rows ; i++) {
@@ -288,8 +293,7 @@ public void MarkAsVisited(Position p)
         }
     }
     public byte[] toByteArray() {
-        int bufferSize = 4 + 4 + 4 + 4 + 4 + 4 + (rows * columns); // Size of int in bytes is 4
-        ByteBuffer byteBuffer = ByteBuffer.allocate(bufferSize);
+        ByteBuffer byteBuffer = ByteBuffer.allocate(24+ (rows * columns));
         byteBuffer.putInt(start.getRowIndex());
         byteBuffer.putInt(start.getColumnIndex());
         byteBuffer.putInt(goal.getRowIndex());
@@ -304,5 +308,9 @@ public void MarkAsVisited(Position p)
         return byteBuffer.array();
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(start, goal, rows, columns)*31 + Arrays.hashCode(grid);
+    }
     }
 

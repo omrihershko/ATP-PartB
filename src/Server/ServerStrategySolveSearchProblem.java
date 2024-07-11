@@ -18,7 +18,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
 
             Maze maze = (Maze) fromClient.readObject();
-            String mazeHash = String.valueOf(maze.hashCode());
+            String mazeHash = ""+maze.hashCode();
             String tempDirectoryPath = System.getProperty("java.io.tmpdir");
             Path solutionFilePath = Paths.get(tempDirectoryPath, mazeHash);
             System.out.println(solutionFilePath);
