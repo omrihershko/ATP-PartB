@@ -7,7 +7,7 @@ public class GeneralCheckingFunctions {
     }
 
     public static String getGithubLink(){
-        String githubLink = "https://github.com/omrihershko/ATP-project-PartA.git";
+        String githubLink = "https://github.com/omrihershko/ATP-PartB.git";
         return githubLink;
     }
 }
